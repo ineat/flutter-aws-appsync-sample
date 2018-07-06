@@ -15,10 +15,10 @@ https://pub.dartlang.org/packages/graphql_flutter
 
 The bridge is based on the official documentation of the AppSync SDK.
 
-AWS AppSync SDK Android : 
+**AWS AppSync SDK Android :** 
 https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-android.html
 
-AWS AppSync SDK iOS : 
+**AWS AppSync SDK iOS :** 
 https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-ios.html
 
 If you want more information on the development of a flutter plugin here is an official link: https://flutter.io/developing-packages/
@@ -57,7 +57,7 @@ schema {
 }
 ```
 
-Pour créer votre schéma GraphQL pour AppSync, consulter le lien https://docs.aws.amazon.com/appsync/latest/devguide/graphql-overview.html 
+To create your GraphQL schema for AppSync, see the link https://docs.aws.amazon.com/appsync/latest/devguide/graphql-overview.html 
 
 ## Security
 
