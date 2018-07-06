@@ -8,45 +8,27 @@ This project is an example of using Flutter with the AWS AppSync solution. It is
 
 [![Demo](https://github.com/ineat/flutter-aws-appsync-sample/blob/master/media/demo.gif)](https://github.com/ineat/flutter-aws-appsync-sample/blob/master/media/demo.mp4)
 
-### My AppSync Configuration
+AWS AppSync automatically updates web and mobile application data in real time, and offline user data is updated as soon as it is reconnected.
+If you use AppSync as a simple GraphQL API without the subscribe feature then it would be better to use the following plugin: : 
+https://pub.dartlang.org/packages/graphql_flutter
 
-**Lambda called by AppSync :** 
-```javascript
 
-var incrementId = 0;
-var messages = [];
+The bridge is based on the official documentation of the AppSync SDK.
 
-exports.handler = async (event, context, callback) => {
-    switch (event.field) {
-        case 'getMessages':
-            getMessages(event, context, callback);
-            break;
-        case 'newMessage':
-            newMessage(event, context, callback);
-            break;
-        default: throw new Error("unsupported");
-    }
-};
+AWS AppSync SDK Android : 
+https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-android.html
 
-function getMessages(event, context, callback) {
-    callback(null, messages);
-}
+AWS AppSync SDK iOS : 
+https://docs.aws.amazon.com/appsync/latest/devguide/building-a-client-app-ios.html
 
-async function newMessage(event, context, callback) {
-    const args = event.arguments;
-    const msg = {
-        id: (++incrementId).toString(),
-        content: args.content,
-        sender: args.sender,
-        conversationId: args.conversationId
-    };
-    messages.push(msg);
-    
-    callback(null, msg);
-}
-```
+If you want more information on the development of a flutter plugin here is an official link: https://flutter.io/developing-packages/
 
-**Schema GraphQL in App Sync :** 
+To make this example work, AppSync is configured with the following GraphQL schema : 
+
+
+## GraphQL schema
+
+The GraphQL schema: 
 
 ```graphql
 type Message {
@@ -75,11 +57,60 @@ schema {
 }
 ```
 
-Settings Authorization type is : **API key**
+Pour créer votre schéma GraphQL pour AppSync, consulter le lien https://docs.aws.amazon.com/appsync/latest/devguide/graphql-overview.html 
 
-Add **resolver** into query, mutation. The data source name  is linked with the previously lambda.
+## Security
+
+AppSync will be secured by API Key.
+
+https://docs.aws.amazon.com/appsync/latest/devguide/security.html
+
+## Data Source
+
+The Data Source used by AppSync is a lambda. Here is this example here is a simplified version :
+
+```javascript
+
+var incrementId = 0;
+var messages = [];
+
+exports.handler = async (event, context, callback) => {
+    switch (event.field) {
+        // match with Data Template resolver
+        case 'getMessages':
+            getMessages(event, context, callback);
+            break;
+        case 'newMessage':
+            newMessage(event, context, callback);
+            break;
+        default: throw new Error("unsupported");
+    }
+};
+
+function getMessages(event, context, callback) {
+    callback(null, messages);
+}
+
+async function newMessage(event, context, callback) {
+    const args = event.arguments;
+    const msg = {
+        id: (++incrementId).toString(),
+        content: args.content,
+        sender: args.sender,
+        conversationId: args.conversationId
+    };
+    messages.push(msg);
+    
+    callback(null, msg);
+}
+```
+
+To link the GraphQL schema methods to the lambda refer to the following link : https://docs.aws.amazon.com/appsync/latest/devguide/tutorial-lambda-resolvers.html
+
+## Resolvers
 
 Request template resolver for NewMessage Mutation :
+
 ```javascript
 {
     "version" : "2017-02-28",
@@ -92,6 +123,7 @@ Request template resolver for NewMessage Mutation :
 ```
 
 Request template resolver for GetMessages Query :
+
 ```javascript
 {
     "version" : "2017-02-28",
@@ -103,13 +135,20 @@ Request template resolver for GetMessages Query :
 }
 ```
 
-Add AppSync API URL, and API Key in the file /lib/constants.dart
+## Configuration sample
+
+To configure AppSync in the project, modify the constants of the file /lib/constants.dart
+
+```dart
+const AWS_APP_SYNC_ENDPOINT = "YOUR ENDPOINT"; // like https://xxx.appsync-api.eu-central-1.amazonaws.com/graphql
+const AWS_APP_SYNC_KEY = "YOUR API KEY";
+```
 
 # Custom Configuration in your project
 
 ## 1. Android
 
-Step 1: add aws android SDK classpath
+**_Step 1:_** add aws android SDK classpath
 
 
 ```groovy
@@ -124,7 +163,7 @@ buildscript {
 
 ```
 
-Step 2: Plugin plugin and SDK
+_**Step 2:**_ Plugin plugin and SDK
 
 ```groovy
 // android/app/build.gradle
@@ -139,7 +178,7 @@ dependencies {
 }
 ```
 
-Step 3: add schema and request GraphQL
+_**Step 3:**_ add schema and request GraphQL
 
 Copy your files in :
 
@@ -147,7 +186,8 @@ Copy your files in :
 /android/app/src/main/graphql/your.package.name/*.json
 
 
-Step 4: Configure Android Manifest
+_**Step 4:**_ Configure Android Manifest
+
 ```xml
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -166,7 +206,8 @@ Step 4: Configure Android Manifest
     
 </manifest>
 ```
-Step 5: Generation GraphQL models
+
+_**Step 5:**_ Generation GraphQL models
 
 Launch gradle command : 
 
@@ -177,7 +218,7 @@ Launch gradle command :
 
 ## 2. iOS
 
-Step 1: add AWS SDK in your Podfile
+_**Step 1:**_ add AWS SDK in your Podfile
 
 ```ruby
 target 'Runner' do
@@ -186,14 +227,15 @@ target 'Runner' do
 end
 ```
 
-Step 2: Retrieve all dependencies
+_**Step 2:**_ Retrieve all dependencies
+
 ```ruby
 pod install
 ```
 
-Caution: Configure your deployment target at 9.0 (Runner.xcworkspace)
+_Caution:_ Configure your deployment target at 9.0 (Runner.xcworkspace)
 
-Step 3: add schema and request GraphQL
+_**Step 3:**_ add schema and request GraphQL
 
 Copy your files in :
 
