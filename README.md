@@ -35,11 +35,10 @@ type Message {
 	id: ID!
 	content: String!
 	sender: String!
-	conversationId: Int!
 }
 
 type Mutation {
-	newMessage(content: String!, sender: String!, conversationId: Int!): Message
+	newMessage(content: String!, sender: String!): Message
 }
 
 type Query {
@@ -47,13 +46,14 @@ type Query {
 }
 
 type Subscription {
-	subscribeToNewMessage(conversationId: Int!): Message
+	subscribeToNewMessage: Message
 		@aws_subscribe(mutations: ["newMessage"])
 }
 
 schema {
 	query: Query
 	mutation: Mutation
+	subscription: Subscription
 }
 ```
 
