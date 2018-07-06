@@ -1,0 +1,138 @@
+﻿query GetConversationLastMessage($id: Int!) {
+    getConversationLastMessage(id: $id) {
+        id
+        from_user
+        to_user
+        emit_date
+        content
+        is_sent
+        is_seen
+        owned
+    }
+}
+
+query GetAllConversations($me: Int!) {
+    getAllConversations(me: $me) {
+        id
+        user {
+            id
+            familyname
+            firstname
+            picture
+        }
+        page {
+            nextToken
+            messages {
+                id
+                from_user
+                to_user
+                emit_date
+                content
+                is_sent
+                is_seen
+                owned
+            }
+        }
+    }
+}
+
+query GetConversation($me: Int!, $user: Int!, $token: Int) {
+    getConversation(me: $me, user: $user, token: $token) {
+        id
+        user {
+            id
+            familyname
+            firstname
+            picture
+        }
+        page {
+            nextToken
+            messages {
+                id
+                from_user
+                to_user
+                emit_date
+                content
+                is_sent
+                is_seen
+                owned
+            }
+        }
+    }
+}
+
+subscription SubscribeToNewConversation($to_user: Int!) {
+    subscribeToNewConversation(to_user: $to_user) {
+        id
+        user {
+            id
+            familyname
+            firstname
+            picture
+        }
+        page {
+            nextToken
+            messages {
+                id
+                from_user
+                to_user
+                emit_date
+                content
+                is_sent
+                is_seen
+                owned
+            }
+        }
+    }
+}
+
+subscription SubscribeToNewMessage($owned: Int!) {
+    subscribeToNewMessage(owned: $owned) {
+        id
+        from_user
+        to_user
+        emit_date
+        content
+        is_sent
+        is_seen
+        owned
+    }
+}
+
+mutation NewConversation($from_user: Int!, $to_user: Int!, $emit_date: String!, $content: String!) {
+    newConversation(from_user: $from_user, to_user: $to_user, emit_date: $emit_date, content: $content) {
+        id
+        user {
+            id
+            familyname
+            firstname
+            picture
+        }
+        page {
+            nextToken
+            messages {
+                id
+                from_user
+                to_user
+                emit_date
+                content
+                is_sent
+                is_seen
+                owned
+            }
+        }
+    }
+}
+
+mutation NewMessage($from_user: Int!, $to_user: Int!, $emit_date: String!, $content: String!, $owned: Int!) {
+    newMessage(from_user: $from_user, to_user: $to_user, emit_date: $emit_date, content: $content, owned: $owned) {
+        id
+        from_user
+        to_user
+        emit_date
+        content
+        is_sent
+        is_seen
+        owned
+    }
+}

@@ -1,0 +1,23 @@
+﻿query GetMessages {
+    getMessages {
+        id
+        content
+        sender
+    }
+}
+
+mutation NewMessage($content: String!, $sender: String!) {
+    newMessage(content: $content, sender: $sender) {
+        id
+        content
+        sender
+    }
+}
+
+subscription SubscribeToNewMessage {
+    subscribeToNewMessage {
+        id
+        content
+        sender
+    }
+}

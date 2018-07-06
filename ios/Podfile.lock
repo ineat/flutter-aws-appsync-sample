@@ -1,0 +1,37 @@
+PODS:
+  - AWSAppSync (2.6.16):
+    - AWSCore (~> 2.6.6)
+    - ReachabilitySwift (~> 4.0.0)
+    - SQLite.swift (= 0.11.4)
+  - AWSCore (2.6.21)
+  - Flutter (1.0.0)
+  - ReachabilitySwift (4.0.0)
+  - SQLite.swift (0.11.4):
+    - SQLite.swift/standard (= 0.11.4)
+  - SQLite.swift/standard (0.11.4)
+
+DEPENDENCIES:
+  - AWSAppSync (~> 2.6.7)
+  - Flutter (from `.symlinks/flutter/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AWSAppSync
+    - AWSCore
+    - ReachabilitySwift
+    - SQLite.swift
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+
+SPEC CHECKSUMS:
+  AWSAppSync: eb2758d2a60518b6c814c119de511dbae1b3fa97
+  AWSCore: a1ff1d32ea7af235fe64be301c204b34cb1f9f83
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  ReachabilitySwift: e67b2cab4d5386053673d8a7421b5981e5f08259
+  SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
+
+PODFILE CHECKSUM: 961ee3fc2ad226402955863f78f52728a775bfc1
+
+COCOAPODS: 1.5.3
