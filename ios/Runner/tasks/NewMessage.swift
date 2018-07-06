@@ -10,6 +10,16 @@ import Foundation
 import AWSCore
 import AWSAppSync
 
+/*
+ * Task for execute the mutation NewMessage in GraphQL file
+ * mutation NewMessage($content: String!, $sender: String!) {
+ *  newMessage(content: $content, sender: $sender) {
+ *      id
+ *      content
+ *      sender
+ *  }
+ * }
+ */
 class NewMessage {
     
     private let client: AWSAppSyncClient

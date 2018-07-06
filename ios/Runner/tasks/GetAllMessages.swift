@@ -10,6 +10,16 @@ import Foundation
 import AWSCore
 import AWSAppSync
 
+/*
+ * Task for execute the query GetAllMessages in GraphQL file
+ * query GetMessages {
+ *  getMessages {
+ *      id
+ *      content
+ *      sender
+ *  }
+ * }
+ */
 class  GetAllMessages {
     
     private let client: AWSAppSyncClient
@@ -19,7 +29,6 @@ class  GetAllMessages {
     }
     
     public func exec(flutterMethodCall: FlutterMethodCall, flutterResult: @escaping FlutterResult) {
-        let args = flutterMethodCall.arguments as! Dictionary<String,Any?>
         let query = GetMessagesQuery()
         self.client.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             if let error = error as? AWSAppSyncClientError {

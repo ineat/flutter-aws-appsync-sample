@@ -10,6 +10,16 @@ import Foundation
 import AWSCore
 import AWSAppSync
 
+/*
+ * Task for execute the subscription SubscribeToNewMessage in GraphQL file
+ * subscription SubscribeToNewMessage {
+ *  subscribeToNewMessage {
+ *      id
+ *      content
+ *      sender
+ *  }
+ * }
+ */
 class SubscriptionToNewMessage {
     
     private let client: AWSAppSyncClient

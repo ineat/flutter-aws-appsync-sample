@@ -11,6 +11,9 @@ import Flutter
 import AWSCore
 import AWSAppSync
 
+/*
+ * Plugin to call GraphQL requests generated from the schema
+ */
 public class AppSyncPlugin: NSObject, FlutterPlugin {
     
     static let CHANNEL_NAME = "com.ineat.appsync"
@@ -19,6 +22,7 @@ public class AppSyncPlugin: NSObject, FlutterPlugin {
     static let SUBSCRIBE_NEW_MESSAGE = "subscribeNewMessage"
     static let SUBSCRIBE_NEW_MESSAGE_RESULT = "subscribeNewMessageResult"
     
+    // Client AWS AppSync for call GraphQL requests
     var appSyncClient: AWSAppSyncClient?
     
     let channel: FlutterMethodChannel
@@ -35,6 +39,13 @@ public class AppSyncPlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         prepareClient(call: call)
+        onPerformMethodCall(call: call, result: result)
+    }
+    
+    /**
+     * Handle type method. Call task for run GraphQL request
+     */
+    private func onPerformMethodCall(call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case AppSyncPlugin.QUERY_GET_ALL_MESSAGES:
             GetAllMessages(client: appSyncClient!).exec(flutterMethodCall: call, flutterResult: result)
@@ -47,6 +58,9 @@ public class AppSyncPlugin: NSObject, FlutterPlugin {
         }
     }
     
+    /**
+     * Create AWS AppSync Client if not exist
+     */
     private func prepareClient(call: FlutterMethodCall) {
         let args = call.arguments as! Dictionary<String, Any>
         let endpoint = args["endpoint"] as! String
