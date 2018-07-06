@@ -10,6 +10,18 @@ import com.ineat.appsync.SubscribeToNewMessageSubscription
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
+/**
+ * Task for execute the subscription SubscribeToNewMessage in GraphQL file
+ * <pre>
+ * subscription SubscribeToNewMessage {
+ *  subscribeToNewMessage {
+ *      id
+ *      content
+ *      sender
+ *  }
+ * }
+ * </pre>
+ */
 class SubscriptionToNewMessage(private val client: AWSAppSyncClient, private val call: MethodCall, private val channel: MethodChannel) {
 
     operator fun invoke() {

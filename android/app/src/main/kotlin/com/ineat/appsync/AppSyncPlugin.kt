@@ -10,6 +10,9 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
 
+/**
+ * Plugin to call GraphQL requests generated from the schema
+ */
 class AppSyncPlugin private constructor(private val registrar: PluginRegistry.Registrar, private val channel: MethodChannel) : MethodChannel.MethodCallHandler {
 
     companion object {
@@ -26,6 +29,9 @@ class AppSyncPlugin private constructor(private val registrar: PluginRegistry.Re
         }
     }
 
+    /**
+     * Client AWS AppSync for call GraphQL requests
+     */
     var client: AWSAppSyncClient? = null
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
@@ -33,6 +39,9 @@ class AppSyncPlugin private constructor(private val registrar: PluginRegistry.Re
         onPerformMethodCall(call, result)
     }
 
+    /**
+     * Handle type method. Call task for run GraphQL request
+     */
     private fun onPerformMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             QUERY_GET_ALL_MESSAGES -> GetAllMessages(client!!, call, result)()
@@ -42,6 +51,9 @@ class AppSyncPlugin private constructor(private val registrar: PluginRegistry.Re
         }
     }
 
+    /**
+     * Create AWS AppSync Client if not exist
+     */
     private fun prepareClient(call: MethodCall) {
         val endpoint = call.argument<String>("endpoint")
         val apiKey = call.argument<String>("apiKey")

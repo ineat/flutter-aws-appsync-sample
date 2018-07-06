@@ -9,6 +9,18 @@ import com.ineat.appsync.NewMessageMutation
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
+/**
+ * Task for execute the mutation NewMessage in GraphQL file
+ * <pre>
+ * mutation NewMessage($content: String!, $sender: String!) {
+ *  newMessage(content: $content, sender: $sender) {
+ *      id
+ *      content
+ *      sender
+ *  }
+ * }
+ * </pre>
+ */
 class NewMessage(private val client: AWSAppSyncClient, private val call: MethodCall, private val result: MethodChannel.Result) {
 
     operator fun invoke() {

@@ -10,6 +10,18 @@ import com.ineat.appsync.GetMessagesQuery
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
+/**
+ * Task for execute the query GetAllMessages in GraphQL file
+ * <pre>
+ * query GetMessages {
+ *  getMessages {
+ *      id
+ *      content
+ *      sender
+ *  }
+ * }
+ * </pre>
+ */
 class GetAllMessages (private val client: AWSAppSyncClient, private val call: MethodCall, private val result: MethodChannel.Result) {
 
     operator fun invoke() {
